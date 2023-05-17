@@ -16,11 +16,15 @@ sudo apt install -y  mysql-server
 cat zbx_db.sql | sudo mysql
 
 # импорт начальной схемы Zabbix
-zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -ppassword zabbix
+# zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -ppassword zabbix
+zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -ppassword zabbix
+
 
 echo 'set global log_bin_trust_function_creators = 0;' | sudo mysql
 
 sudo sh -c "echo DBPassword=password >> /etc/zabbix/zabbix_server.conf"
+sudo sh -c "echo php_value date.timezone Europe/Moscow >> /etc/zabbix/apache.conf"
+
 
 sudo systemctl restart zabbix-server zabbix-agent apache2
 sudo systemctl enable zabbix-server zabbix-agent apache2
