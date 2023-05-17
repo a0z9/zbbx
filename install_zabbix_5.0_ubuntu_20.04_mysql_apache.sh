@@ -12,13 +12,13 @@ sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf z
 sudo apt update
 
 # mysql server
-sudo apt install -y  mysql-server
+sudo apt install -y mysql-server
 
-cat zbx_db.sql | sudo mysql
+cat zbx5_db.sql | sudo mysql
 
 # импорт начальной схемы Zabbix
 # zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -ppassword zabbix
-sudo zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql --default-character-set=utf8mb4 -uzabbix -ppassword zabbix
+sudo zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -ppassword zabbix
 
 
 echo 'set global log_bin_trust_function_creators = 0;' | sudo mysql
