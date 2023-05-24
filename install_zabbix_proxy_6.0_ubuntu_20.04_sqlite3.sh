@@ -14,8 +14,10 @@ sudo apt install -y zabbix-proxy-sqlite3
 sudo apt install -y sqlite3
 
 sudo mkdir -p /var/lib/sqlite/
+sudo chown -R zabbix:zabbix /var/lib/sqlite
 
 sudo sh -c "echo DBName=/var/lib/sqlite/zabbix_proxy.db >> /etc/zabbix/zabbix_proxy.conf"
+sudo sed -i 's/Server=127.0.0.1/Server=172.17.17.11/g' /etc/zabbix/zabbix_proxy.conf
 
 sudo systemctl restart zabbix-proxy
 sudo systemctl enable zabbix-proxy
